@@ -1,5 +1,7 @@
 "use client"
+export const dynamic = "force-dynamic"
 
+import { Suspense } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
@@ -9,7 +11,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { OrdersTable } from "@/components/orders-table"
 import { DashboardNav } from "@/components/dashboard-nav"
 
-export default function OrdersPage() {
+export default function OrdersPageWrapper() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading…</div>}>
+      <OrdersPage />
+    </Suspense>
+  )
+}
+
+function OrdersPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <div className="grid flex-1 md:grid-cols-[220px_1fr]">
