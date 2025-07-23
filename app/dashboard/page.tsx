@@ -1,11 +1,14 @@
 import Link from "next/link"
 import { CuboidIcon as Cube, Package, Settings, Star, User } from "lucide-react"
+import { Suspense } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardNav } from "@/components/dashboard-nav"
 import { OrdersTable } from "@/components/orders-table"
+
+export const dynamic = "force-dynamic"
 
 export default function DashboardPage() {
   return (
@@ -93,7 +96,9 @@ export default function DashboardPage() {
                         <CardTitle>Recent Orders</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <OrdersTable limit={5} />
+                        <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                          <OrdersTable limit={5} />
+                        </Suspense>
                       </CardContent>
                       <CardFooter>
                         <Link href="/dashboard/orders">
@@ -145,7 +150,9 @@ export default function DashboardPage() {
                       <CardDescription>View and manage all your print orders</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <OrdersTable />
+                      <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                        <OrdersTable />
+                      </Suspense>
                     </CardContent>
                   </Card>
                 </TabsContent>

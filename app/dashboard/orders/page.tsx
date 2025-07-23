@@ -1,5 +1,4 @@
 "use client"
-export const dynamic = "force-dynamic"
 
 import { Suspense } from "react"
 import Link from "next/link"
@@ -10,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { OrdersTable } from "@/components/orders-table"
 import { DashboardNav } from "@/components/dashboard-nav"
+
+export const dynamic = "force-dynamic"
 
 export default function OrdersPageWrapper() {
   return (
@@ -51,7 +52,9 @@ function OrdersPage() {
                   <CardDescription>View all your print orders</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <OrdersTable />
+                  <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                    <OrdersTable />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -63,7 +66,9 @@ function OrdersPage() {
                   <CardDescription>Orders waiting to be processed</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <OrdersTable status="pending" />
+                  <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                    <OrdersTable status="pending" />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -75,7 +80,9 @@ function OrdersPage() {
                   <CardDescription>Orders that are currently being printed</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <OrdersTable status="printing" />
+                  <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                    <OrdersTable status="printing" />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -87,7 +94,9 @@ function OrdersPage() {
                   <CardDescription>Orders that have been shipped</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <OrdersTable status="shipped" />
+                  <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                    <OrdersTable status="shipped" />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -99,7 +108,9 @@ function OrdersPage() {
                   <CardDescription>Orders that have been delivered</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <OrdersTable status="completed" />
+                  <Suspense fallback={<div className="text-sm text-muted-foreground">Loading orders…</div>}>
+                    <OrdersTable status="completed" />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
