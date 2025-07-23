@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
@@ -13,7 +15,7 @@ export default function OrdersPage() {
       <div className="grid flex-1 md:grid-cols-[220px_1fr]">
         <DashboardNav />
         <main className="flex-1 p-6 md:p-8">
-          <div className="flex items-center gap-4 mb-8">
+          <div className="mb-8 flex items-center gap-4">
             <Link href="/dashboard">
               <Button variant="ghost" size="icon">
                 <ArrowLeft className="h-4 w-4" />
@@ -31,6 +33,7 @@ export default function OrdersPage() {
               <TabsTrigger value="shipped">Shipped</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
             </TabsList>
+
             <TabsContent value="all">
               <Card>
                 <CardHeader>
@@ -42,6 +45,7 @@ export default function OrdersPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
             <TabsContent value="pending">
               <Card>
                 <CardHeader>
@@ -53,6 +57,7 @@ export default function OrdersPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
             <TabsContent value="printing">
               <Card>
                 <CardHeader>
@@ -64,6 +69,7 @@ export default function OrdersPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
             <TabsContent value="shipped">
               <Card>
                 <CardHeader>
@@ -75,6 +81,7 @@ export default function OrdersPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
             <TabsContent value="completed">
               <Card>
                 <CardHeader>
