@@ -1,214 +1,265 @@
 import Link from "next/link"
-import Image from "next/image"
-import { ArrowRight, Calendar, Clock, CuboidIcon as Cube, FileUp, Printer, Star, Truck } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Upload, Clock, Palette, Shield, ArrowRight, Printer } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navigation */}
-      <header className="border-b">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <Cube className="h-6 w-6" />
-            <span className="text-xl font-bold">PrintCube</span>
-          </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link href="/" className="text-sm font-medium hover:underline underline-offset-4">
-              Home
-            </Link>
-            <Link href="/upload" className="text-sm font-medium hover:underline underline-offset-4">
-              Upload Model
-            </Link>
-            <Link href="/materials" className="text-sm font-medium hover:underline underline-offset-4">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Printer className="h-8 w-8 text-primary" />
+            <span className="text-2xl font-bold text-foreground">PrintCraft</span>
+          </div>
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link href="/materials" className="text-muted-foreground hover:text-foreground transition-colors">
               Materials
             </Link>
-            <Link href="/contact" className="text-sm font-medium hover:underline underline-offset-4">
+            <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
+            <Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors">
+              Login
+            </Link>
+            <ThemeToggle />
           </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="outline" size="sm">
-                Log In
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button size="sm">Register</Button>
-            </Link>
-          </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-muted">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Turn Your 3D Models Into Reality
-                </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Upload your STL files, choose your materials, and we'll handle the rest. Professional 3D printing
-                  service with fast delivery.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link href="/upload">
-                  <Button size="lg" className="gap-2">
-                    Start Printing <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="/materials">
-                  <Button size="lg" variant="outline">
-                    Explore Materials
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="relative h-[400px] lg:h-[600px]">
-              <Image
-                src="/placeholder.svg?height=600&width=600"
-                alt="3D Printer in action"
-                fill
-                className="object-cover rounded-lg"
-                priority
-              />
-            </div>
+      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <div className="container mx-auto text-center">
+          <Badge variant="secondary" className="mb-4">
+            Professional 3D Printing Service
+          </Badge>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
+            Bring Your Ideas to <span className="text-primary">Life</span>
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            High-quality 3D printing with premium materials, fast turnaround times, and professional finishing. Upload
+            your STL files and get instant quotes.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg" className="text-lg px-8">
+              <Link href="/upload">
+                <Upload className="mr-2 h-5 w-5" />
+                Start Printing
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" className="text-lg px-8 bg-transparent">
+              <Link href="/materials">
+                View Materials
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Why Choose PrintCraft?</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              We combine cutting-edge technology with expert craftsmanship to deliver exceptional results
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="border-border bg-card">
+              <CardHeader>
+                <Clock className="h-12 w-12 text-primary mb-4" />
+                <CardTitle className="text-foreground">Fast Turnaround</CardTitle>
+                <CardDescription>
+                  Get your prints in 2-5 business days with our optimized production pipeline
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-border bg-card">
+              <CardHeader>
+                <Palette className="h-12 w-12 text-primary mb-4" />
+                <CardTitle className="text-foreground">Premium Materials</CardTitle>
+                <CardDescription>
+                  Choose from PLA, ABS, PETG, TPU and more in various colors and finishes
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-border bg-card">
+              <CardHeader>
+                <Shield className="h-12 w-12 text-primary mb-4" />
+                <CardTitle className="text-foreground">Quality Guarantee</CardTitle>
+                <CardDescription>100% satisfaction guarantee with free reprints if you're not happy</CardDescription>
+              </CardHeader>
+            </Card>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How It Works</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Our streamlined process makes 3D printing accessible to everyone
-              </p>
-            </div>
+      <section className="py-20 px-4 bg-muted/50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">How It Works</h2>
+            <p className="text-xl text-muted-foreground">Simple, fast, and reliable 3D printing process</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="bg-primary/10 p-4 rounded-full">
-                <FileUp className="h-8 w-8 text-primary" />
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                1
               </div>
-              <h3 className="text-xl font-bold">1. Upload Your Model</h3>
+              <h3 className="text-xl font-semibold mb-2 text-foreground">Upload Your File</h3>
               <p className="text-muted-foreground">
-                Upload your STL file and our system will analyze it for printability
+                Upload your STL file and get an instant quote with estimated print time
               </p>
             </div>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="bg-primary/10 p-4 rounded-full">
-                <Calendar className="h-8 w-8 text-primary" />
+
+            <div className="text-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                2
               </div>
-              <h3 className="text-xl font-bold">2. Choose Time & Materials</h3>
-              <p className="text-muted-foreground">
-                Select from available printing slots and choose your preferred materials and colors
-              </p>
+              <h3 className="text-xl font-semibold mb-2 text-foreground">Choose Materials</h3>
+              <p className="text-muted-foreground">Select from our range of premium materials and colors</p>
             </div>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="bg-primary/10 p-4 rounded-full">
-                <Truck className="h-8 w-8 text-primary" />
+
+            <div className="text-center">
+              <div className="bg-primary text-primary-foreground rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                3
               </div>
-              <h3 className="text-xl font-bold">3. Receive Your Print</h3>
-              <p className="text-muted-foreground">We'll print your model and ship it to your specified address</p>
+              <h3 className="text-xl font-semibold mb-2 text-foreground">Receive Your Print</h3>
+              <p className="text-muted-foreground">Track your order and receive your high-quality print</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Why Choose PrintCube</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Professional 3D printing service with features designed for your convenience
-              </p>
+      {/* Stats Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">10,000+</div>
+              <div className="text-muted-foreground">Prints Completed</div>
             </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-            <div className="flex flex-col space-y-2">
-              <Clock className="h-6 w-6 text-primary" />
-              <h3 className="text-xl font-bold">Print Time Calculator</h3>
-              <p className="text-muted-foreground">Get accurate estimates of printing time before you order</p>
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">98%</div>
+              <div className="text-muted-foreground">Customer Satisfaction</div>
             </div>
-            <div className="flex flex-col space-y-2">
-              <Calendar className="h-6 w-6 text-primary" />
-              <h3 className="text-xl font-bold">Availability Calendar</h3>
-              <p className="text-muted-foreground">See available printing slots and schedule your prints</p>
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">24h</div>
+              <div className="text-muted-foreground">Average Start Time</div>
             </div>
-            <div className="flex flex-col space-y-2">
-              <Printer className="h-6 w-6 text-primary" />
-              <h3 className="text-xl font-bold">Material Selection</h3>
-              <p className="text-muted-foreground">Choose from PLA, ABS, PETG and more with various color options</p>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <Star className="h-6 w-6 text-primary" />
-              <h3 className="text-xl font-bold">Order Tracking</h3>
-              <p className="text-muted-foreground">Track your order status from acceptance to delivery</p>
+            <div>
+              <div className="text-4xl font-bold text-primary mb-2">15+</div>
+              <div className="text-muted-foreground">Material Options</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                Ready to Print Your Model?
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Get started today and bring your 3D designs to life
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Link href="/upload">
-                <Button size="lg" className="gap-2">
-                  Upload Your Model <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </div>
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-primary text-primary-foreground">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Printing?</h2>
+          <p className="text-xl mb-8 opacity-90">
+            Join thousands of satisfied customers who trust PrintCraft with their 3D printing needs
+          </p>
+          <Button asChild size="lg" variant="secondary" className="text-lg px-8">
+            <Link href="/upload">
+              Get Started Now
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t">
-        <div className="container flex flex-col gap-6 py-8 md:py-12 px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
-            <Link href="/" className="flex items-center gap-2">
-              <Cube className="h-6 w-6" />
-              <span className="text-xl font-bold">PrintCube</span>
-            </Link>
-            <nav className="flex gap-4 md:gap-6 flex-wrap">
-              <Link href="/" className="text-sm font-medium hover:underline underline-offset-4">
-                Home
-              </Link>
-              <Link href="/upload" className="text-sm font-medium hover:underline underline-offset-4">
-                Upload Model
-              </Link>
-              <Link href="/materials" className="text-sm font-medium hover:underline underline-offset-4">
-                Materials
-              </Link>
-              <Link href="/contact" className="text-sm font-medium hover:underline underline-offset-4">
-                Contact
-              </Link>
-              <Link href="/dashboard" className="text-sm font-medium hover:underline underline-offset-4">
-                Dashboard
-              </Link>
-            </nav>
+      <footer className="bg-muted py-12 px-4">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <Printer className="h-6 w-6 text-primary" />
+                <span className="text-xl font-bold text-foreground">PrintCraft</span>
+              </div>
+              <p className="text-muted-foreground">
+                Professional 3D printing services for makers, designers, and businesses.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4 text-foreground">Services</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <Link href="/upload" className="hover:text-foreground transition-colors">
+                    3D Printing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/materials" className="hover:text-foreground transition-colors">
+                    Materials
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-foreground transition-colors">
+                    Custom Orders
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4 text-foreground">Support</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <Link href="/contact" className="hover:text-foreground transition-colors">
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard" className="hover:text-foreground transition-colors">
+                    Order Status
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/materials" className="hover:text-foreground transition-colors">
+                    Material Guide
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4 text-foreground">Account</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li>
+                  <Link href="/login" className="hover:text-foreground transition-colors">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/register" className="hover:text-foreground transition-colors">
+                    Register
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/dashboard" className="hover:text-foreground transition-colors">
+                    Dashboard
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} PrintCube. All rights reserved.
+
+          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
+            <p>&copy; 2024 PrintCraft. All rights reserved.</p>
           </div>
         </div>
       </footer>
