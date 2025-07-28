@@ -10,7 +10,6 @@ import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -30,6 +29,7 @@ export default function UploadPage() {
   const [selectedColor, setSelectedColor] = useState("")
   const [selectedQuality, setSelectedQuality] = useState("standard")
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("")
+  const [activeTab, setActiveTab] = useState("upload")
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
@@ -40,8 +40,7 @@ export default function UploadPage() {
     { id: "tpu", name: "TPU Flexible", colors: ["White", "Black"], price: 25.0 },
   ]
 
-  const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"]
-
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0]
@@ -150,7 +149,7 @@ export default function UploadPage() {
             </p>
           </div>
 
-          <Tabs defaultValue="upload" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="upload">Upload Model</TabsTrigger>
               <TabsTrigger value="materials" disabled={!file}>
@@ -238,10 +237,7 @@ export default function UploadPage() {
                     <Link href="/">Cancel</Link>
                   </Button>
                   <Button
-                    onClick={() => {
-                      const materialsTab = document.querySelector('[data-value="materials"]') as HTMLElement
-                      materialsTab?.click()
-                    }}
+                    onClick={() => setActiveTab("materials")}
                     disabled={!file}
                   >
                     Continue to Materials
@@ -315,47 +311,22 @@ export default function UploadPage() {
                     <div className="space-y-4">
                       <div>
                         <Label>Print Date</Label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className="w-full justify-start text-left font-normal bg-transparent"
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {date ? format(date, "PPP") : <span>Pick a date</span>}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0">
-                            <Calendar
-                              mode="single"
-                              selected={date}
-                              onSelect={setDate}
-                              initialFocus
-                              disabled={(date) =>
-                                date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 1))
-                              }
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-
-                      <div>
-                        <Label htmlFor="time">Time Slot</Label>
-                        <Select value={selectedTimeSlot} onValueChange={setSelectedTimeSlot}>
-                          <SelectTrigger id="time">
-                            <SelectValue placeholder="Select time slot" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {timeSlots.map((slot) => (
-                              <SelectItem key={slot} value={slot}>
-                                {slot}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Available time slots based on your selected date
-                        </p>
+                        <div className="border rounded-md p-3">
+                          <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            className="rounded-md border-0"
+                            disabled={(date) =>
+                              date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 1))
+                            }
+                          />
+                        </div>
+                        {date && (
+                          <p className="text-sm text-muted-foreground mt-2">
+                            Selected date: {format(date, "PPP")}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -363,18 +334,12 @@ export default function UploadPage() {
                 <CardFooter className="flex justify-between">
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      const uploadTab = document.querySelector('[data-value="upload"]') as HTMLElement
-                      uploadTab?.click()
-                    }}
+                    onClick={() => setActiveTab("upload")}
                   >
                     Back
                   </Button>
                   <Button
-                    onClick={() => {
-                      const checkoutTab = document.querySelector('[data-value="checkout"]') as HTMLElement
-                      checkoutTab?.click()
-                    }}
+                    onClick={() => setActiveTab("checkout")}
                     disabled={!date || !selectedMaterial || !selectedColor}
                   >
                     Continue to Checkout
@@ -434,10 +399,8 @@ export default function UploadPage() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="us">United States</SelectItem>
-                              <SelectItem value="ca">Canada</SelectItem>
-                              <SelectItem value="uk">United Kingdom</SelectItem>
-                              <SelectItem value="au">Australia</SelectItem>
+                              <SelectItem value="us">Egypt</SelectItem>
+                              
                             </SelectContent>
                           </Select>
                         </div>
@@ -475,10 +438,7 @@ export default function UploadPage() {
                               {date ? format(date, "PPP") : "Not selected"}
                             </span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">Time Slot:</span>
-                            <span className="font-medium text-foreground">{selectedTimeSlot || "Not selected"}</span>
-                          </div>
+                          
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Estimated Print Time:</span>
                             <span className="font-medium text-foreground">
@@ -515,10 +475,7 @@ export default function UploadPage() {
                       <Button
                         type="button"
                         variant="outline"
-                        onClick={() => {
-                          const materialsTab = document.querySelector('[data-value="materials"]') as HTMLElement
-                          materialsTab?.click()
-                        }}
+                        onClick={() => setActiveTab("materials")}
                       >
                         Back
                       </Button>
