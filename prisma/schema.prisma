@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id  Int @id @default(autoincrement())
+  email String  @unique
+  name  String
+  address String?
+  password  String
+  gender String
+  phone String
+  createdAt DateTime  @default(now())
+  type String
+  orders Orders[]
+  reservations Reservations[]
+}
+
+model Orders {
+  id Int @id  @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  reservationId Int?
+  reservation Reservations? @relation(fields: [reservationId], references: [id])
+  review String?
+  stars String?
+  size String // { x: number, y: number, z: number }
+  print_time String
+  status String
+  price String
+  file Bytes // stores the binary data of the .stl file
+  createdAt DateTime  @default(now())
+}
+
+model Reservations {
+  id  Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  date DateTime
+  orders Orders[]
+  createdAt DateTime  @default(now())
+}

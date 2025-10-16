@@ -1,5 +1,5 @@
 "use client"
-
+import LogoutButton from "./Logout"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Bell, CreditCard, Home, Package, Settings, User, Upload, FileText, Star, HelpCircle } from "lucide-react"
@@ -12,18 +12,13 @@ export function DashboardNav() {
   const pathname = usePathname()
 
   const navItems = [
-    {
-      title: "Dashboard",
-      href: "/dashboard",
-      icon: Home,
-      description: "Overview & stats",
-    },
+  
     {
       title: "My Orders",
-      href: "/dashboard/orders",
+      href: "/myorder",
       icon: Package,
       description: "Track your prints",
-      badge: "3",
+      badge: "",
     },
     {
       title: "New Print",
@@ -34,28 +29,15 @@ export function DashboardNav() {
     },
     {
       title: "Print History",
-      href: "/dashboard/history",
+      href: "/history",
       icon: FileText,
       description: "Past orders",
     },
     {
       title: "Reviews",
-      href: "/dashboard/reviews",
+      href: "/reviews",
       icon: Star,
       description: "Rate your prints",
-    },
-    {
-      title: "Billing",
-      href: "/dashboard/billing",
-      icon: CreditCard,
-      description: "Payments & invoices",
-    },
-    {
-      title: "Notifications",
-      href: "/dashboard/notifications",
-      icon: Bell,
-      description: "Updates & alerts",
-      badge: "2",
     },
     {
       title: "Support",
@@ -63,15 +45,10 @@ export function DashboardNav() {
       icon: HelpCircle,
       description: "Get help",
     },
-    {
-      title: "Settings",
-      href: "/dashboard/settings",
-      icon: Settings,
-      description: "Account settings",
-    },
+    
     {
       title: "Profile",
-      href: "/dashboard/profile",
+      href: "/profile",
       icon: User,
       description: "Personal info",
     },
@@ -117,18 +94,11 @@ export function DashboardNav() {
       {/* Quick Stats */}
       <div className="p-4 border-t border-border">
         <div className="space-y-2">
+        
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">This Month</span>
-            <span className="font-medium text-foreground">3 prints</span>
+            <LogoutButton />
           </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Total Spent</span>
-            <span className="font-medium text-foreground">$486</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Avg Rating</span>
-            <span className="font-medium text-foreground">4.8 ⭐</span>
-          </div>
+         
         </div>
       </div>
     </div>

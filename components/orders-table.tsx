@@ -208,12 +208,14 @@ export function OrdersTable({ status, limit, orders: propOrders }: OrdersTablePr
                         <span className="sr-only">View order {order.id}</span>
                       </Button>
                     </Link>
+                    <Button variant="ghost" size="icon" asChild title="Download STL">
+                      <a href={`/api/download/${order.id}`}>
+                        <Download className="h-4 w-4" />
+                        <span className="sr-only">Download STL for order {order.id}</span>
+                      </a>
+                    </Button>
                     {order.status === "completed" && (
                       <>
-                        <Button variant="ghost" size="icon" title="Download Files">
-                          <Download className="h-4 w-4" />
-                          <span className="sr-only">Download files for order {order.id}</span>
-                        </Button>
                         <Button variant="ghost" size="icon" title="Leave Review">
                           <MessageSquare className="h-4 w-4" />
                           <span className="sr-only">Review order {order.id}</span>

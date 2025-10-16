@@ -1,5 +1,7 @@
-"use client"
+// "use client"
 
+import { loginAction } from "../actions/login"
+import { login, loginValidate } from "@/lib/auth"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,8 +9,14 @@ import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowLeft, Printer, Mail, Lock } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { redirect } from 'next/navigation'
+import { getSession } from "@/lib/auth"
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getSession()
+  if(session){
+    redirect('/profile')
+  }
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -33,21 +41,21 @@ export default function LoginPage() {
             <CardDescription>Sign in to your account to continue</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input type="email" placeholder="Enter your email" className="pl-10" />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input type="password" placeholder="Enter your password" className="pl-10" />
-              </div>
-            </div>
+              <form action={loginAction}>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input type="email" name='email' placeholder="Enter your email" className="pl-10" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Password</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input type="password" name='password' placeholder="Enter your password" className="pl-10" />
+                  </div>
+                </div>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
@@ -60,10 +68,10 @@ export default function LoginPage() {
                 Forgot password?
               </Link>
             </div>
-
-            <Button className="w-full" asChild>
-              <Link href="/dashboard">Sign In</Link>
+ <Button type='submit'>
+              Sign In
             </Button>
+            </form>
 
             <div className="text-center">
               <span className="text-sm text-muted-foreground">
